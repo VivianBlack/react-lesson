@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type='text/babel'>
+
+      var Form = React.createClass({
+        inputRef: function (input) {
+          this.nameInput = input;
+        },
+        numberRef: function (input) {
+          this.numInput = input;
+        },
+        onSubmit: function (evt) {
+          evt.preventDefault();
+          this.props.addItem(this.nameInput.value, this.numInput.value);
+          this.nameInput.value = '';
+          this.numInput.value = '';
+        },
+        render: function () {
+          return (
+            <form onSubmit={this.onSubmit}>
+              <input type="text" ref={this.inputRef}/>
+              <input type="text" ref={this.numberRef}/>
+              <button type="submit">Submit</button>
+            </form>
+          );
+        },
+      });
+      
+      var App = React.createClass({
+        getInitialState: function () {
+          return {
+            list: [],
+            order: 1, // 1:desc, -1: asc
+          };
+        },
+        addItem: function (name, number) {
+          var id = this.state.list.length + 1;
+          this.setState({
+            list: this.state.list.concat({
+              id: id,
+              name: name,
+              number: parseInt(number, 10),
+            }),
+          });
+        },
+        sort: function (a, b) {
+          return (b.number - a.number) * this.state.order;
+        },
+        setOrderDesc: function () {
+          this.setState({ order: 1 });
+        },
+        setOrderAsce: function () {
+          this.setState({ order: -1 });
+        },
+        toogleOrder: function () {
+          this.setState({
+            order: -this.state.order,
+          });
+        },
+        render: function () {
+          var sortedList = this.state.list.slice().sort(this.sort);
+          return (
+            <div>
+              <Form addItem={this.addItem}/>
+              <div>
+                <button onClick={this.setOrderDesc}>Desc</button>
+                <button onClick={this.setOrderAsce}>Asce</button>
+                <button onClick={this.toogleOrder}>Toggle</button>
+              </div>
+              <div>
+                {this.state.order === 1 ? 'Desc' : 'Asce'}
+              </div>
+              <ol>
+                {sortedList.map(function (item) {
+                  return (
+                    <li key={item.id}>
+                      {item.number} - {item.name}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          );
+        },
+      });
+
+      ReactDOM.render(<App/>, document.getElementById('app'));
+      
+    </script>
+  </body>
+</html>
