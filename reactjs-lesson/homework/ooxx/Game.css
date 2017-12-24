@@ -1,0 +1,19 @@
+.game{
+  user-select: none;
+}
+
+.board{
+  width: 310px;
+}
+
+.grid{
+  border: 1px solid #666;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  font-size: 70px;
+  line-height: 100px;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: top;
+}

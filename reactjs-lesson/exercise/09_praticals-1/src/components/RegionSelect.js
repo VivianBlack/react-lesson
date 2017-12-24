@@ -46,6 +46,7 @@ class RegionSelect extends Component {
           ))}
         </select>
 
+
         <select value={this.state.areaIdx} onChange={this.onChangeArea}>
           {city.areas.map(({ name }, idx) => (
             <option value={idx}>{name}</option>

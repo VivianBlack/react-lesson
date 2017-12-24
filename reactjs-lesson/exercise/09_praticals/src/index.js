@@ -1,5 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import ImageSlider from './components/ImageSlider';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import streamers from './data/streamers.json';
+
+ReactDOM.render(
+  <ImageSlider imgs={streamers} />,
+  document.getElementById('root'),
+);
